@@ -92,7 +92,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	upReq.expiry = parseExpiry(r.PostFormValue("expires"))
 	upReq.accessKey = r.PostFormValue(accessKeyParamName)
-
+	upReq.srcIp = r.Header.get("X-Forwarded-For")
 	if r.PostFormValue("randomize") == "true" {
 		upReq.randomBarename = true
 	}
@@ -131,7 +131,7 @@ func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	upReq.filename = c.URLParams["name"]
 	upReq.src = http.MaxBytesReader(w, r.Body, Config.maxSize)
-
+	upReq.srcIp = r.Header.get("X-Forwarded-For")
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -203,7 +203,7 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq.accessKey = r.FormValue(accessKeyParamName)
 	upReq.randomBarename = r.FormValue("randomize") == "yes"
 	upReq.expiry = parseExpiry(r.FormValue("expiry"))
-
+	upReq.srcIp = r.Header.get("X-Forwarded-For")
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -236,7 +236,7 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
-
+	
 	// Get seconds until expiry. Non-integer responses never expire.
 	expStr := r.Header.Get("Linx-Expiry")
 	upReq.expiry = parseExpiry(expStr)
@@ -334,8 +334,7 @@ func processUpload(upReq UploadRequest) (upload Upload, err error) {
 	if upReq.deleteKey == "" {
 		upReq.deleteKey = uniuri.NewLen(30)
 	}
-	var srcIp = r.Header.get("X-Forwarded-For")
-	upload.Metadata, err = storageBackend.Put(upload.Filename, io.MultiReader(bytes.NewReader(header), upReq.src), fileExpiry, upReq.deleteKey, upReq.accessKey, srcIp)
+	upload.Metadata, err = storageBackend.Put(upload.Filename, io.MultiReader(bytes.NewReader(header), upReq.src), fileExpiry, upReq.deleteKey, upReq.accessKey, upReq.srcIp)
 	if err != nil {
 		return upload, err
 	}
