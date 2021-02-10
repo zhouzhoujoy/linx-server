@@ -61,7 +61,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	uploadHeaderProcess(r, &upReq)
 
 	contentType := r.Header.Get("Content-Type")
-
+	srcIp := r.Header.get("X-Forwarded-For")
 	if strings.HasPrefix(contentType, "multipart/form-data") {
 		file, headers, err := r.FormFile("file")
 		if err != nil {
@@ -92,7 +92,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	upReq.expiry = parseExpiry(r.PostFormValue("expires"))
 	upReq.accessKey = r.PostFormValue(accessKeyParamName)
-	upReq.srcIp := r.Header.get("X-Forwarded-For")
 	if r.PostFormValue("randomize") == "true" {
 		upReq.randomBarename = true
 	}
