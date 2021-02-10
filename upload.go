@@ -60,7 +60,8 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
 
-	contentType := r.Header.Get("X-Forwarded-For")
+	contentType := r.Header.Get("Content-Type")
+	
 	if strings.HasPrefix(contentType, "multipart/form-data") {
 		file, headers, err := r.FormFile("file")
 		if err != nil {
@@ -129,7 +130,6 @@ func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	upReq.filename = c.URLParams["name"]
 	upReq.src = http.MaxBytesReader(w, r.Body, Config.maxSize)
-	upReq.srcIp = r.Header.get("X-Forwarded-For")
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -201,7 +201,6 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq.accessKey = r.FormValue(accessKeyParamName)
 	upReq.randomBarename = r.FormValue("randomize") == "yes"
 	upReq.expiry = parseExpiry(r.FormValue("expiry"))
-	upReq.srcIp = r.Header.get("X-Forwarded-For")
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -234,7 +233,7 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
-	
+	upReq.srcIp = r.Header.get("X-Forwarded-For")
 	// Get seconds until expiry. Non-integer responses never expire.
 	expStr := r.Header.Get("Linx-Expiry")
 	upReq.expiry = parseExpiry(expStr)
