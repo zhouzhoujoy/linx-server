@@ -92,7 +92,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	upReq.expiry = parseExpiry(r.PostFormValue("expires"))
 	upReq.accessKey = r.PostFormValue(accessKeyParamName)
-	upReq.srcIp = r.Header.get("X-Forwarded-For")
+	upReq.srcIp := r.Header.get("X-Forwarded-For")
 	if r.PostFormValue("randomize") == "true" {
 		upReq.randomBarename = true
 	}
