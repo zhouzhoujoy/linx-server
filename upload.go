@@ -60,8 +60,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
 
-	contentType := r.Header.Get("Content-Type")
-	srcIp := r.Header.get("X-Forwarded-For")
+	contentType := r.Header.Get("X-Forwarded-For")
 	if strings.HasPrefix(contentType, "multipart/form-data") {
 		file, headers, err := r.FormFile("file")
 		if err != nil {
