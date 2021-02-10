@@ -42,6 +42,7 @@ type UploadRequest struct {
 	deleteKey      string        // Empty string if not defined
 	randomBarename bool
 	accessKey      string // Empty string if not defined
+	srcIp          string // Empty string if not defined
 }
 
 // Metadata associated with a file as it would actually be stored
@@ -333,8 +334,8 @@ func processUpload(upReq UploadRequest) (upload Upload, err error) {
 	if upReq.deleteKey == "" {
 		upReq.deleteKey = uniuri.NewLen(30)
 	}
-
-	upload.Metadata, err = storageBackend.Put(upload.Filename, io.MultiReader(bytes.NewReader(header), upReq.src), fileExpiry, upReq.deleteKey, upReq.accessKey)
+	var srcIp = r.Header.get("X-Forwarded-For")
+	upload.Metadata, err = storageBackend.Put(upload.Filename, io.MultiReader(bytes.NewReader(header), upReq.src), fileExpiry, upReq.deleteKey, upReq.accessKey, srcIp)
 	if err != nil {
 		return upload, err
 	}

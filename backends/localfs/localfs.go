@@ -25,6 +25,7 @@ type MetadataJSON struct {
 	Mimetype     string   `json:"mimetype"`
 	Size         int64    `json:"size"`
 	Expiry       int64    `json:"expiry"`
+	SrcIp        string   `json:"srcip,omitempty"`
 	ArchiveFiles []string `json:"archive_files,omitempty"`
 }
 
@@ -106,6 +107,8 @@ func (b LocalfsBackend) writeMetadata(key string, metadata backends.Metadata) er
 		Sha256sum:    metadata.Sha256sum,
 		Expiry:       metadata.Expiry.Unix(),
 		Size:         metadata.Size,
+		SrcIp:        metadata.SrcIp,
+		
 	}
 
 	dst, err := os.Create(metaPath)
@@ -124,7 +127,7 @@ func (b LocalfsBackend) writeMetadata(key string, metadata backends.Metadata) er
 	return nil
 }
 
-func (b LocalfsBackend) Put(key string, r io.Reader, expiry time.Time, deleteKey, accessKey string) (m backends.Metadata, err error) {
+func (b LocalfsBackend) Put(key string, r io.Reader, expiry time.Time, deleteKey, accessKey string, srcIp string) (m backends.Metadata, err error) {
 	filePath := path.Join(b.filesPath, key)
 
 	dst, err := os.Create(filePath)
@@ -153,6 +156,7 @@ func (b LocalfsBackend) Put(key string, r io.Reader, expiry time.Time, deleteKey
 	m.Expiry = expiry
 	m.DeleteKey = deleteKey
 	m.AccessKey = accessKey
+	m.SrcIp = srcIp
 	m.ArchiveFiles, _ = helpers.ListArchiveFiles(m.Mimetype, m.Size, dst)
 
 	err = b.writeMetadata(key, m)

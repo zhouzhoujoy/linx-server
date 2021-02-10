@@ -12,6 +12,7 @@ type Metadata struct {
 	Mimetype     string
 	Size         int64
 	Expiry       time.Time
+	SrcIp        string
 	ArchiveFiles []string
 }
 
