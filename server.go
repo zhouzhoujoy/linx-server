@@ -74,6 +74,7 @@ var Config struct {
 	accessKeyCookieExpiry     uint64
 	customPagesDir            string
 	cleanupEveryMinutes       uint64
+	extraFooterText           string
 }
 
 var Templates = make(map[string]*pongo2.Template)
