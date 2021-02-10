@@ -304,7 +304,7 @@ func main() {
 		"path to directory containing .md files to render as custom pages")
 	flag.Uint64Var(&Config.cleanupEveryMinutes, "cleanup-every-minutes", 0,
 		"How often to clean up expired files in minutes (default is 0, which means files will be cleaned up as they are accessed)")
-	flag.StringVar(&Config.extraFooterText, "extrafootertext", "",
+	flag.StringVar(&Config.extraFooterText, "extra-footer-text", "",
 		"Extra text above the footer for notices.")
 
 	iniflags.Parse()
