@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block head %}
-<meta property="og:type" content="audio">
+<meta property="og:audio:type" content="audio/mpeg" />
 <meta property="og:audio:url" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" />
-<meta property="og:audio" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" />
+<meta property="og:audio:secure_url" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" />
 {% endblock %}
 
 {% block main %}
