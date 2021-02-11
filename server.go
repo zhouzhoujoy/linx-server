@@ -273,18 +273,18 @@ func main() {
 	flag.StringVar(&Config.remoteAuthFile, "remoteauthfile", "",
 		"path to a file containing newline-separated scrypted auth keys for remote uploads")
 	flag.StringVar(&Config.contentSecurityPolicy, "contentsecuritypolicy",
-		"default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'self';",
+		"",
 		"value of default Content-Security-Policy header")
 	flag.StringVar(&Config.fileContentSecurityPolicy, "filecontentsecuritypolicy",
-		"default-src 'none'; img-src 'self'; object-src 'self'; media-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'self';",
+		"",
 		"value of Content-Security-Policy header for file access")
 	flag.StringVar(&Config.referrerPolicy, "referrerpolicy",
-		"same-origin",
+		"",
 		"value of default Referrer-Policy header")
 	flag.StringVar(&Config.fileReferrerPolicy, "filereferrerpolicy",
-		"same-origin",
+		"",
 		"value of Referrer-Policy header for file access")
-	flag.StringVar(&Config.xFrameOptions, "xframeoptions", "SAMEORIGIN",
+	flag.StringVar(&Config.xFrameOptions, "xframeoptions", "",
 		"value of X-Frame-Options header")
 	flag.Var(&Config.addHeaders, "addheader",
 		"Add an arbitrary header to the response. This option can be used multiple times.")
