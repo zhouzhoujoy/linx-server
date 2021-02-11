@@ -1,7 +1,10 @@
 {% extends "../base.html" %}
 
 {% block title %}{{sitename}} - {{ filename }}{% endblock %}
-
+{% block head %}
+<meta property="og:video" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}"/>
+<meta property="og:video:secure_url" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}"/>
+{% endblock %}
 {% block bodymore %}{% endblock %}
 
 {% block content %}
