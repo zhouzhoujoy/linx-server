@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block head %}
-<meta property="og:image" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}">
-<meta property="og:image:secure_url" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}">
-<meta property="twitter:image" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}">
+<meta content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" property="og:image">
+<meta content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" property="og:image:secure_url">
+<meta content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" property="twitter:image">
 {% endblock %}
 
 {% block main %}
