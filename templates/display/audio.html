@@ -1,13 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-<meta property="twitter:card" content="player" />
-<meta property="twitter:url" content="{{ siteurl }}{{ sitepath }}{{ filename }}" />
-<meta property="twitter:image" content="https://put.icu/static/images/404.jpg" />
-<meta property="twitter:player:height" content="400">
-<meta property="twitter:player:width" content="400">
-<meta property="twitter:player" content="https://put.icu/s/sl404t3f.html" />
-<meta property="og:audio:url" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" />
+<meta property="og:audio" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" />
 <meta property="og:audio:secure_url" content="{{ siteurl }}{{ sitepath }}{{ selifpath }}{{ filename }}" />
 {% endblock %}
 
