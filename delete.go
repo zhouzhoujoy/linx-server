@@ -12,6 +12,7 @@ func deleteHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	requestKey := r.Header.Get("Linx-Delete-Key")
 	
 	if len(r.URL.Query().Get("linx-delete-key")) > 0 {
+		_ := requestKey
 		requestKey := r.URL.Query().Get("linx-delete-key")
 	}
 	
