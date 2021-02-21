@@ -4,8 +4,10 @@
   "RequestMethod": "PUT",
   "RequestURL": "https://put.icu/upload/",
   "Headers": {
+    "Linx-Delete-Key": "testkey",
     "Accept": "application/json"
   },
   "Body": "Binary",
-  "URL": "$json:url$"
+  "URL": "$json:url$",
+  "DeletionURL": "https://put.icu/delete/$json:filename$?linx-delete-key=$json:delete_key$"
 }
