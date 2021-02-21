@@ -10,9 +10,9 @@ import (
 
 func deleteHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	requestKey := r.Header.Get("Linx-Delete-Key")
-	urlRequestKey := r.URL.Query().Get("linx-delete-key")
-	if len(urlRequestKey) > 0 {
-		requestKey := urlRequestKey
+	
+	if len(r.URL.Query().Get("linx-delete-key")) > 0 {
+		requestKey := r.URL.Query().Get("linx-delete-key")
 	}
 	
 	filename := c.URLParams["name"]
