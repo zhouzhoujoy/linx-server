@@ -10,9 +10,13 @@ import (
 
 func deleteHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	requestKey := r.Header.Get("Linx-Delete-Key")
-
+	urlRequestKey := r.URL.Query().Get("linx-delete-key")
+	if len(urlRequestKey) > 0 {
+		requestKey := urlRequestKey
+	}
+	
 	filename := c.URLParams["name"]
-
+	
 	// Ensure that file exists and delete key is correct
 	metadata, err := storageBackend.Head(filename)
 	if err == backends.NotFoundErr {

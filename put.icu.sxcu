@@ -1,0 +1,11 @@
+﻿{
+  "Version": "13.1.0",
+  "DestinationType": "ImageUploader, FileUploader",
+  "RequestMethod": "PUT",
+  "RequestURL": "https://put.icu/upload/",
+  "Headers": {
+    "Accept": "application/json"
+  },
+  "Body": "Binary",
+  "URL": "$json:url$"
+}

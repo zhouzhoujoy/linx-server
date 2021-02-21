@@ -212,7 +212,9 @@ func setup() *web.Mux {
 	mux.Put(Config.sitePath+"upload/:name", uploadPutHandler)
 
 	mux.Delete(Config.sitePath+":name", deleteHandler)
-
+	// Adding new delete path method to make linx-server usable with ShareX.
+	mux.Get(Config.sitePath+"delete/:name", deleteHandler)
+	
 	mux.Get(Config.sitePath+"static/*", staticHandler)
 	mux.Get(Config.sitePath+"favicon.ico", staticHandler)
 	mux.Get(Config.sitePath+"robots.txt", staticHandler)
