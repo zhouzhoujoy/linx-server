@@ -228,7 +228,7 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
-	if len(r.Header.Get("Content-Length") > 0 {
+	if len(r.Header.Get("Content-Length")) > 0 {
 		if r.Header.Get("Content-Length") > Config.maxSize {
 			upReq.size = r.Header.Get("Content-Length")
 		}
