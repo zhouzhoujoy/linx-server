@@ -56,7 +56,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		badRequestHandler(c, w, r, RespAUTO, "")
 		return
 	}
-	if len(r.Header.Get("Test-Header")) > 0 {
+	if r.Header.Get("Test-Header") == "test" {
 		oopsHandler(c, w, r, RespHTML, "You killed it")
 	}
 
@@ -126,7 +126,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
-	if len(r.Header.Get("Test-Header")) > 0 {
+	if len(r.Header.Get("Test-Header")) == "test" {
 		oopsHandler(c, w, r, RespHTML, "You killed it")
 	}
 	upReq := UploadRequest{}
