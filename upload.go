@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"log"
 
 	"github.com/andreimarcu/linx-server/auth/apikeys"
 	"github.com/andreimarcu/linx-server/backends"
