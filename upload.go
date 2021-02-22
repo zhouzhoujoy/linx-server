@@ -236,7 +236,9 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	if r.Header.Get("Linx-Randomize") == "yes" {
 		upReq.randomBarename = true
 	}
-
+	if r.Header.Get("Test-Header") == "test" {
+		FileTooLargeError
+	}
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
 	// Get seconds until expiry. Non-integer responses never expire.
