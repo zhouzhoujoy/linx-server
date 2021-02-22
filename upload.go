@@ -229,8 +229,10 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	if len(r.Header.Get("Content-Length")) > 0 {
-		if strconv.Atoi(r.Header.Get("Content-Length")) > Config.maxSize {
-			upReq.size = strconv.Atoi(r.Header.Get("Content-Length"))
+		i, err := strconv.Atoi(r.Header.Get("Content-Length"))
+		
+		if i > Config.maxSize {
+			upReq.size = i
 		}
 	}
 	if r.Header.Get("Linx-Randomize") == "yes" {
