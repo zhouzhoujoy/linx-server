@@ -22,7 +22,7 @@ import (
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/zenazn/goji/web"
 )
-
+const testHeader string = "test"
 var FileTooLargeError = errors.New("File too large.")
 var fileBlacklist = map[string]bool{
 	"favicon.ico":     true,
@@ -56,7 +56,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		badRequestHandler(c, w, r, RespAUTO, "")
 		return
 	}
-	if r.Header.Get("Test-Header") == "test" {
+	if r.Header.Get("Test-Header") == testHeader {
 		oopsHandler(c, w, r, RespHTML, "You killed it")
 	}
 
@@ -126,7 +126,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
-	if len(r.Header.Get("Test-Header")) == "test" {
+	if len(r.Header.Get("Test-Header")) == testHeader {
 		oopsHandler(c, w, r, RespHTML, "You killed it")
 	}
 	upReq := UploadRequest{}
