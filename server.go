@@ -77,6 +77,7 @@ var Config struct {
 	extraFooterText           string
 	maxDurationTime           uint64
 	maxDurationSize           int64
+	disableAccessKey          bool
 }
 
 var Templates = make(map[string]*pongo2.Template)
