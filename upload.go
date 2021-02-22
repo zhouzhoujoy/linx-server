@@ -338,6 +338,9 @@ func processUpload(upReq UploadRequest) (upload Upload, err error) {
 	if upReq.deleteKey == "" {
 		upReq.deleteKey = uniuri.NewLen(30)
 	}
+	if Config.disableAccessKey == true {
+		upReq.accessKey = ""
+	}
 	upload.Metadata, err = storageBackend.Put(upload.Filename, io.MultiReader(bytes.NewReader(header), upReq.src), fileExpiry, upReq.deleteKey, upReq.accessKey, upReq.srcIp)
 	if err != nil {
 		return upload, err

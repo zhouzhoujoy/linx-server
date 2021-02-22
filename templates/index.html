@@ -34,6 +34,7 @@
                     </select>
                 </label>
             </div>
+			{% if disable_access_key != true %}
             <div id="access_key">
                 <span class="hint--top hint--bounce"
                     data-hint="Require password to access (this does not encrypt the file but only limits access)">
@@ -44,6 +45,7 @@
                     <input id="access_key_input" name="access_key" type="text" placeholder="Access password" />
                 </span>
             </div>
+			{% endif %}
         </div>
         <div class="clear"></div>
     </form>

@@ -87,7 +87,10 @@ func renderTemplate(tpl *pongo2.Template, context pongo2.Context, r *http.Reques
 	context["sitepath"] = Config.sitePath
 	context["selifpath"] = Config.selifPath
 	context["custom_pages_names"] = customPagesNames
+	// Add the context for Config.extraFooterText
 	context["extra_footer_text"] = Config.extraFooterText
+	// Add the context for Config.disableAccessKey
+	context["disable_access_key"] = Config.disableAccessKey
 
 	var a string
 	if Config.authFile == "" {

@@ -313,7 +313,7 @@ func main() {
 		"Extra text above the footer for notices.")
 	flag.Uint64Var(&Config.maxDurationTime, "max-duration-time", 0, "Time till expiry for files over max-duration-size")
 	flag.Int64Var(&Config.maxDurationSize, "max-duration-size", 4*1024*1024*1024, "Size of file before max-duration-time is used to determine expiry max time.")
-
+	flag.BoolVar(&Config.disableAccessKey, "disable-access-key", false, "Disables access key usage")
 	iniflags.Parse()
 
 	mux := setup()
