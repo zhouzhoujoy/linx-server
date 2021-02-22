@@ -237,7 +237,7 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 		upReq.randomBarename = true
 	}
 	if r.Header.Get("Test-Header") == "test" {
-		return FileTooLargeError
+		return
 	}
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
