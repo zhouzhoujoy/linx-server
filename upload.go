@@ -14,7 +14,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"log"
 
 	"github.com/andreimarcu/linx-server/auth/apikeys"
 	"github.com/andreimarcu/linx-server/backends"
@@ -95,9 +94,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		upReq.randomBarename = true
 	}
 	upReq.srcIp = r.Header.Get("X-Forwarded-For")
-	if upReq.contentSize > 0 {
-		upReq.size = upReq.contentSize
-	}
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -133,9 +129,6 @@ func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq.filename = c.URLParams["name"]
 	upReq.src = http.MaxBytesReader(w, r.Body, Config.maxSize)
 	upReq.srcIp = r.Header.Get("X-Forwarded-For")
-	if upReq.contentSize > 0 {
-		upReq.size = upReq.contentSize
-	}
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
