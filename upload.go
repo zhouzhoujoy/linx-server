@@ -100,7 +100,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
 		if err == nil {
 			if i > Config.maxSize {
-				upReq.size = i
+				oopsHandler(c, w, r, RespJSON, "Could not upload file: ")
 			}
 		}
 	}
@@ -145,7 +145,7 @@ func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
 		if err == nil {
 			if i > Config.maxSize {
-				upReq.size = i
+				oopsHandler(c, w, r, RespJSON, "Could not upload file: ")
 			}
 		}
 	}
@@ -227,7 +227,7 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
 		if err == nil {
 			if i > Config.maxSize {
-				upReq.size = i
+				oopsHandler(c, w, r, RespJSON, "Could not upload file: ")
 			}
 		}
 	}
