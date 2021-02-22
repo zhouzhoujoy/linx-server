@@ -55,8 +55,13 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		badRequestHandler(c, w, r, RespAUTO, "")
 		return
 	}
-	if r.Header.Get("Test-Header") == "test" {
-		oopsHandler(c, w, r, RespHTML, "You killed it")
+	if len(r.Header.Get("Content-Length")) > 0 {
+		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+		if err == nil {
+			if i > Config.maxSize {
+				oopsHandler(c, w, r, RespHTML, "Could not upload file: File too large")
+			}
+		}
 	}
 
 	upReq := UploadRequest{}
@@ -125,8 +130,13 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
-	if r.Header.Get("Test-Header") == "test" {
-		oopsHandler(c, w, r, RespHTML, "You killed it")
+	if len(r.Header.Get("Content-Length")) > 0 {
+		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+		if err == nil {
+			if i > Config.maxSize {
+				oopsHandler(c, w, r, RespHTML, "Could not upload file: File too large")
+			}
+		}
 	}
 	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
@@ -236,8 +246,13 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	if r.Header.Get("Linx-Randomize") == "yes" {
 		upReq.randomBarename = true
 	}
-	if r.Header.Get("Test-Header") == "test" {
-		return
+	if len(r.Header.Get("Content-Length")) > 0 {
+		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+		if err == nil {
+			if i > Config.maxSize {
+				oopsHandler(c, w, r, RespHTML, "Could not upload file: File too large")
+			}
+		}
 	}
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
