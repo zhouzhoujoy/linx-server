@@ -245,7 +245,7 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	} else {
 		upReq.contentSize = contentSize
 		log.Printf("content size assigned")
-		log.Printf(upReq.contentSize)
+		log.Print(upReq.contentSize)
 	}
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
