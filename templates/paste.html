@@ -14,10 +14,11 @@
                         id="extension" class="codebox" name='extension' type='text' value="" placeholder="txt" /></span>
             </div>
             <div>
+				{% if disable_access_key != true %}
                 <span class="hint--top hint--bounce" data-hint="Require password to access (leave empty to disable)">
                     <input class="codebox" name="access_key" type="text" placeholder="password" />
                 </span>
-
+				{% endif %}
                 <select id="expiry" name="expires">
                     <option disabled>Expires:</option>
                     {% for expiry in expirylist %}
