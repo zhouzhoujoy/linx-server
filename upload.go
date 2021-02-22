@@ -125,7 +125,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
-	if r.Header.Get("Test-Header" == "test" {
+	if r.Header.Get("Test-Header") == "test" {
 		oopsHandler(c, w, r, RespHTML, "You killed it")
 	}
 	upReq := UploadRequest{}
