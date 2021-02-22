@@ -237,7 +237,7 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	if r.Header.Get("Linx-Randomize") == "yes" {
 		upReq.randomBarename = true
 	}
-	upReq.contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+	upReq.contentSize, err = strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
 	if err != nil {
 		upReq.contentSize = 0
 	}
