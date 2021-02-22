@@ -237,9 +237,11 @@ func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	if r.Header.Get("Linx-Randomize") == "yes" {
 		upReq.randomBarename = true
 	}
-	upReq.contentSize, err = strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
 	if err != nil {
 		upReq.contentSize = 0
+	} else {
+		upReq.contentSize = contentSize
 	}
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
