@@ -328,7 +328,7 @@ func processUpload(upReq UploadRequest) (upload Upload, err error) {
 			fileExpiry = expiry.NeverExpire
 		}
 	} else {
-		if upReq.size > Config.maxDurationSize && upReq.expiry > CmaxDurationTime {
+		if upReq.size > Config.maxDurationSize && upReq.expiry > maxDurationTime {
 				fileExpiry = time.Now().Add(maxDurationTime)
 		} else {
 			fileExpiry = time.Now().Add(upReq.expiry)
