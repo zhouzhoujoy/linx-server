@@ -53,6 +53,15 @@ type Upload struct {
 }
 
 func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
+	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+	if err != nil {
+		upReq.contentSize = 0
+		log.Printf("error on content size conversion")
+	} else {
+		upReq.contentSize = contentSize
+		log.Printf("content size assigned")
+		log.Print(contentSize)
+	}
 	if !strictReferrerCheck(r, getSiteURL(r), []string{"Linx-Delete-Key", "Linx-Expiry", "Linx-Randomize", "X-Requested-With"}) {
 		badRequestHandler(c, w, r, RespAUTO, "")
 		return
@@ -127,6 +136,15 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
+	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+	if err != nil {
+		upReq.contentSize = 0
+		log.Printf("error on content size conversion")
+	} else {
+		upReq.contentSize = contentSize
+		log.Printf("content size assigned")
+		log.Print(contentSize)
+	}
 	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
 
