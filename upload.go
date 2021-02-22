@@ -56,6 +56,9 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		badRequestHandler(c, w, r, RespAUTO, "")
 		return
 	}
+	if len(r.Header.Get("Test-Header")) > 0 {
+		oopsHandler(c, w, r, RespHTML, "You killed it")
+	}
 
 	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
@@ -95,16 +98,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		upReq.randomBarename = true
 	}
 	upReq.srcIp = r.Header.Get("X-Forwarded-For")
-	
-	if len(r.Header.Get("Content-Length")) > 0 {
-		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-		if err == nil {
-			if i > Config.maxSize {
-				oopsHandler(c, w, r, RespJSON, "Could not upload file: ")
-			}
-		}
-	}
-	
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -133,6 +126,9 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
+	if len(r.Header.Get("Test-Header")) > 0 {
+		oopsHandler(c, w, r, RespHTML, "You killed it")
+	}
 	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
 
@@ -140,16 +136,6 @@ func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq.filename = c.URLParams["name"]
 	upReq.src = http.MaxBytesReader(w, r.Body, Config.maxSize)
 	upReq.srcIp = r.Header.Get("X-Forwarded-For")
-	
-	if len(r.Header.Get("Content-Length")) > 0 {
-		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-		if err == nil {
-			if i > Config.maxSize {
-				oopsHandler(c, w, r, RespJSON, "Could not upload file: ")
-			}
-		}
-	}
-	
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -222,16 +208,6 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq.randomBarename = r.FormValue("randomize") == "yes"
 	upReq.expiry = parseExpiry(r.FormValue("expiry"))
 	upReq.srcIp = r.Header.Get("X-Forwarded-For")
-	
-	if len(r.Header.Get("Content-Length")) > 0 {
-		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-		if err == nil {
-			if i > Config.maxSize {
-				oopsHandler(c, w, r, RespJSON, "Could not upload file: ")
-			}
-		}
-	}
-	
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
