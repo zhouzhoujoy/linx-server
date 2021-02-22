@@ -75,6 +75,8 @@ var Config struct {
 	customPagesDir            string
 	cleanupEveryMinutes       uint64
 	extraFooterText           string
+	maxDurationTime           uint64
+	maxDurationSize           int64
 }
 
 var Templates = make(map[string]*pongo2.Template)
@@ -309,6 +311,8 @@ func main() {
 		"How often to clean up expired files in minutes (default is 0, which means files will be cleaned up as they are accessed)")
 	flag.StringVar(&Config.extraFooterText, "extra-footer-text", "",
 		"Extra text above the footer for notices.")
+	flag.Uint64Var(&Config.maxDurationTime, "max-duration-time", 0, "Time till expiry for files over max-duration-size")
+	flag.Int64Var(&Config.maxDurationSize, "max-duration-size", 4*1024*1024*1024, "Size of file before max-duration-time is used to determine expiry max time.")
 
 	iniflags.Parse()
 
