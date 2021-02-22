@@ -53,6 +53,12 @@ type Upload struct {
 }
 
 func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
+	if !strictReferrerCheck(r, getSiteURL(r), []string{"Linx-Delete-Key", "Linx-Expiry", "Linx-Randomize", "X-Requested-With"}) {
+		badRequestHandler(c, w, r, RespAUTO, "")
+		return
+	}
+
+	upReq := UploadRequest{}
 	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
 	if err != nil {
 		upReq.contentSize = 0
@@ -62,12 +68,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		log.Printf("content size assigned")
 		log.Print(contentSize)
 	}
-	if !strictReferrerCheck(r, getSiteURL(r), []string{"Linx-Delete-Key", "Linx-Expiry", "Linx-Randomize", "X-Requested-With"}) {
-		badRequestHandler(c, w, r, RespAUTO, "")
-		return
-	}
-
-	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
 
 	contentType := r.Header.Get("Content-Type")
@@ -136,6 +136,7 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
+	upReq := UploadRequest{}
 	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
 	if err != nil {
 		upReq.contentSize = 0
@@ -145,9 +146,8 @@ func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		log.Printf("content size assigned")
 		log.Print(contentSize)
 	}
-	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
-
+	
 	defer r.Body.Close()
 	upReq.filename = c.URLParams["name"]
 	upReq.src = http.MaxBytesReader(w, r.Body, Config.maxSize)
