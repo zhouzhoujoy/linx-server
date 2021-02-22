@@ -59,15 +59,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	upReq := UploadRequest{}
-	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-	if err != nil {
-		upReq.contentSize = 0
-		log.Printf("error on content size conversion")
-	} else {
-		upReq.contentSize = contentSize
-		log.Printf("content size assigned")
-		log.Print(contentSize)
-	}
 	uploadHeaderProcess(r, &upReq)
 
 	contentType := r.Header.Get("Content-Type")
@@ -137,15 +128,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq := UploadRequest{}
-	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-	if err != nil {
-		upReq.contentSize = 0
-		log.Printf("error on content size conversion")
-	} else {
-		upReq.contentSize = contentSize
-		log.Printf("content size assigned")
-		log.Print(contentSize)
-	}
 	uploadHeaderProcess(r, &upReq)
 	
 	defer r.Body.Close()
@@ -255,15 +237,6 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	if r.Header.Get("Linx-Randomize") == "yes" {
 		upReq.randomBarename = true
-	}
-	contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-	if err != nil {
-		upReq.contentSize = 0
-		log.Printf("error on content size conversion")
-	} else {
-		upReq.contentSize = contentSize
-		log.Printf("content size assigned")
-		log.Print(upReq.contentSize)
 	}
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
