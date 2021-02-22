@@ -320,7 +320,7 @@ func processUpload(upReq UploadRequest) (upload Upload, err error) {
 
 	// Get the rest of the metadata needed for storage
 	var fileExpiry time.Time
-	maxDurationTime := time.Duration(Config.maxDurationTime) 
+	maxDurationTime := time.Duration(Config.maxDurationTime) * time.Second
 	if upReq.expiry == 0 {
 		if upReq.size > Config.maxDurationSize && maxDurationTime > 0 {
 				fileExpiry = time.Now().Add(maxDurationTime)
