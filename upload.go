@@ -42,6 +42,7 @@ type UploadRequest struct {
 	randomBarename bool
 	accessKey      string // Empty string if not defined
 	srcIp          string // Empty string if not defined
+	contentSize    int64
 }
 
 // Metadata associated with a file as it would actually be stored
@@ -54,14 +55,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	if !strictReferrerCheck(r, getSiteURL(r), []string{"Linx-Delete-Key", "Linx-Expiry", "Linx-Randomize", "X-Requested-With"}) {
 		badRequestHandler(c, w, r, RespAUTO, "")
 		return
-	}
-	if len(r.Header.Get("Content-Length")) > 0 {
-		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-		if err == nil {
-			if i > Config.maxSize {
-				oopsHandler(c, w, r, RespHTML, "Could not upload file: File too large")
-			}
-		}
 	}
 
 	upReq := UploadRequest{}
@@ -102,6 +95,9 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 		upReq.randomBarename = true
 	}
 	upReq.srcIp = r.Header.Get("X-Forwarded-For")
+	if upReq.contentSize > 0 {
+		upReq.size = upReq.contentSize
+	}
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -130,14 +126,6 @@ func uploadPostHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
-	if len(r.Header.Get("Content-Length")) > 0 {
-		i, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
-		if err == nil {
-			if i > Config.maxSize {
-				oopsHandler(c, w, r, RespHTML, "Could not upload file: File too large")
-			}
-		}
-	}
 	upReq := UploadRequest{}
 	uploadHeaderProcess(r, &upReq)
 
@@ -145,6 +133,9 @@ func uploadPutHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	upReq.filename = c.URLParams["name"]
 	upReq.src = http.MaxBytesReader(w, r.Body, Config.maxSize)
 	upReq.srcIp = r.Header.Get("X-Forwarded-For")
+	if upReq.contentSize > 0 {
+		upReq.size = upReq.contentSize
+	}
 	upload, err := processUpload(upReq)
 
 	if strings.EqualFold("application/json", r.Header.Get("Accept")) {
@@ -245,6 +236,10 @@ func uploadRemote(c web.C, w http.ResponseWriter, r *http.Request) {
 func uploadHeaderProcess(r *http.Request, upReq *UploadRequest) {
 	if r.Header.Get("Linx-Randomize") == "yes" {
 		upReq.randomBarename = true
+	}
+	upReq.contentSize, err := strconv.ParseInt(r.Header.Get("Content-Length"), 10, 64)
+	if err != nil {
+		upReq.contentSize = 0
 	}
 	upReq.deleteKey = r.Header.Get("Linx-Delete-Key")
 	upReq.accessKey = r.Header.Get(accessKeyHeaderName)
