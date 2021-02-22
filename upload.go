@@ -43,7 +43,6 @@ type UploadRequest struct {
 	randomBarename bool
 	accessKey      string // Empty string if not defined
 	srcIp          string // Empty string if not defined
-	contentSize    int64
 }
 
 // Metadata associated with a file as it would actually be stored
