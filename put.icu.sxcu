@@ -1,11 +1,12 @@
 ﻿{
   "Version": "13.1.0",
-  "DestinationType": "ImageUploader, FileUploader",
+  "DestinationType": "ImageUploader, TextUploader, FileUploader",
   "RequestMethod": "PUT",
   "RequestURL": "https://put.icu/upload/",
   "Headers": {
-    "Linx-Delete-Key": "testkey",
-    "Accept": "application/json"
+    "Accept": "application/json",
+    "Linx-Delete-Key": null,
+    "Linx-Access-Key": null
   },
   "Body": "Binary",
   "URL": "$json:url$",
