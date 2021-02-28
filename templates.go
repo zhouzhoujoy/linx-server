@@ -91,6 +91,7 @@ func renderTemplate(tpl *pongo2.Template, context pongo2.Context, r *http.Reques
 	context["extra_footer_text"] = Config.extraFooterText
 	// Add the context for Config.disableAccessKey
 	context["disable_access_key"] = Config.disableAccessKey
+	context["default_randomize"] = Config.defaultRandomFilename
 
 	var a string
 	if Config.authFile == "" {
