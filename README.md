@@ -112,6 +112,11 @@ maxexpiry = 86400
 | ```nologs = true``` | (optionally) disable request logs in stdout
 | ```force-random-filename = true``` | (optionally) force the use of random filenames
 | ```custompagespath = custom_pages/``` | (optionally) specify path to directory containing markdown pages (must end in .md) that will be added to the site navigation (this can be useful for providing contact/support information and so on). For example, custom_pages/My_Page.md will become My Page in the site navigation 
+| ```extra-footer-text = "..."``` | (optionally) Extra text above the footer for notices.
+| ```max-duration-time = 0``` | Time till expiry for files over max-duration-size. (Default is 0 for no-expiry.)
+| ```max-duration-size = 4294967296``` | Size of file before max-duration-time is used to determine expiry max time. (Default is 4GB)
+| ```disable-access-key = true``` | Disables access key usage. (Default is false.)
+| ```default-random-filename = true``` | Makes it so the random filename is not default if set false. (Default is true.)
 
 
 #### Cleaning up expired files
