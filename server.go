@@ -313,10 +313,10 @@ func main() {
 		"How often to clean up expired files in minutes (default is 0, which means files will be cleaned up as they are accessed)")
 	flag.StringVar(&Config.extraFooterText, "extra-footer-text", "",
 		"Extra text above the footer for notices.")
-	flag.Uint64Var(&Config.maxDurationTime, "max-duration-time", 0, "Time till expiry for files over max-duration-size")
-	flag.Int64Var(&Config.maxDurationSize, "max-duration-size", 4*1024*1024*1024, "Size of file before max-duration-time is used to determine expiry max time.")
-	flag.BoolVar(&Config.disableAccessKey, "disable-access-key", false, "Disables access key usage")
-	flag.BoolVar(&Config.defaultRandomFilename, "default-random-filename", true, "Makes it so the random filename is not default if set false. Default true.")
+	flag.Uint64Var(&Config.maxDurationTime, "max-duration-time", 0, "Time till expiry for files over max-duration-size. (Default is 0 for no-expiry.)")
+	flag.Int64Var(&Config.maxDurationSize, "max-duration-size", 4*1024*1024*1024, "Size of file before max-duration-time is used to determine expiry max time. (Default is 4GB)")
+	flag.BoolVar(&Config.disableAccessKey, "disable-access-key", false, "Disables access key usage. (Default is false.)")
+	flag.BoolVar(&Config.defaultRandomFilename, "default-random-filename", true, "Makes it so the random filename is not default if set false. (Default is true.)")
 	iniflags.Parse()
 
 	mux := setup()
