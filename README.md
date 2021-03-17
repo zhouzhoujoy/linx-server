@@ -1,11 +1,10 @@
 linx-server 
 ======
-[![Build Status](https://travis-ci.org/andreimarcu/linx-server.svg?branch=master)](https://travis-ci.org/andreimarcu/linx-server)  
 
 Self-hosted file/media sharing website.  
 
 ### Demo
-You can see what it looks like using the demo: [https://demo.linx-server.net/](https://demo.linx-server.net/)
+You can see what it looks like using the demo: [https://put.icu/](https://put.icu/)
 
 
 ### Clients
