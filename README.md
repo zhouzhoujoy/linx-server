@@ -5,6 +5,7 @@ Feel free to send a pull request if you are maintaining an active fork of this p
 ---
 
 
+
 linx-server 
 ======
 [![Build Status](https://travis-ci.org/andreimarcu/linx-server.svg?branch=master)](https://travis-ci.org/andreimarcu/linx-server)  
@@ -14,6 +15,8 @@ Self-hosted file/media sharing website.
 ### Demo
 You can see what it looks like using the demo: [https://demo.linx-server.net/](https://demo.linx-server.net/)
 
+### Active Forks
+- ZizzyDizzyMC: [https://github.com/ZizzyDizzyMC/linx-server/](https://github.com/ZizzyDizzyMC/linx-server/)
 
 ### Clients
 **Official**
